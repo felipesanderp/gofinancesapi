@@ -1,9 +1,9 @@
-import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryColumn, UpdateDateColumn } from "typeorm";
 import { v4 as uuidv4 } from "uuid";
 
 @Entity("transactions")
 class Transaction {
-  @PrimaryColumn('uuid')
+  @PrimaryColumn()
   id?: string;
 
   @Column()
@@ -15,12 +15,8 @@ class Transaction {
   @Column('decimal')
   value: number;
 
-  // @ManyToOne(() => Category)
-  // @JoinColumn({ name: 'category_id' })
-  // category: Category;
-
-  // @Column()
-  // category_id: string;
+  @Column()
+  category: string;
 
   @CreateDateColumn()
   created_at: Date;
