@@ -1,0 +1,32 @@
+version: "3.7"
+
+services:
+  gofinances_database:
+    image: postgres
+    container_name: gofinances_database
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=gofinances
+      - POSTGRES_PASSWORD=docker
+      - POSTGRES_DB=gofinances
+    volumes:
+      - pgdata:/data/postgres
+  app:
+    build: .
+    container_name: gofinances_api
+    restart: always
+    ports:
+      - 4000:4000
+    volumes:
+      - .:/usr/app
+    links:
+      - gofinances_database
+    depends_on:
+      - gofinances_database
+
+
+volumes:
+  pgdata:
+    driver: local
