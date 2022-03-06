@@ -9,7 +9,7 @@ class CreateTransactionController {
 
     const createTransactionUseCase = container.resolve(CreateTransactionUseCase);
 
-    await createTransactionUseCase.execute({
+   await createTransactionUseCase.execute({
       title,
       value,
       type,

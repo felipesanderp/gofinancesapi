@@ -16,22 +16,22 @@ class TransactionRepository implements ITransactionRepository {
       title,
       value,
       type,
-      category
+      category,
     });
 
     await this.repository.save(transaction);
+  }
+
+  async list(): Promise<Transaction[]> {
+    const transactions = await this.repository.find();
+
+    return transactions;
   }
 
   async findById(id: string): Promise<Transaction> {
     const transaction = await this.repository.findOne(id);
 
     return transaction;
-  }
-
-  async findCategory(category: string): Promise<Transaction> {
-    const categoryFind = await this.repository.findOne({category});
-
-    return categoryFind;
   }
 }
 

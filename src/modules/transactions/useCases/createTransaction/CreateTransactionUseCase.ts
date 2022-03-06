@@ -17,25 +17,12 @@ class CreateTransactionUseCase {
     value,
     category
   }: ICreateTransactionDTO): Promise<void> {
-    const categoryExists = await this.transactionRepository.findCategory(category);
-
-    let categoryTitle = categoryExists.category;
-
-    if (categoryExists) {
-      this.transactionRepository.create({
-        title,
-        type,
-        value,
-        category: categoryTitle
-      });
-    } else {
-      this.transactionRepository.create({
+   await this.transactionRepository.create({
         title,
         type,
         value,
         category,
-      });
-    }
+    })
   }
 }
 
