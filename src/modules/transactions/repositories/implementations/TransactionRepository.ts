@@ -33,6 +33,12 @@ class TransactionRepository implements ITransactionRepository {
 
     return transaction;
   }
+
+  async save(transaction: Transaction): Promise<Transaction> {
+    await this.repository.save(transaction);
+
+    return transaction;
+  }
 }
 
 export { TransactionRepository }

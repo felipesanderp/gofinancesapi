@@ -5,6 +5,7 @@ interface ITransactionRepository {
   create(data: ICreateTransactionDTO): Promise<void>;
   findById(id: string): Promise<Transaction>;
   list(): Promise<Transaction[]>;
+  save(transaction: Transaction): Promise<Transaction>;
 }
 
 export { ITransactionRepository }
