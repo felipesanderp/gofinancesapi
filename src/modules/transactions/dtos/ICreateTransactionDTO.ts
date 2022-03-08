@@ -1,3 +1,5 @@
+import { Category } from "../entities/Category";
+
 interface ICreateTransactionDTO {
   id?: string;
   title: string;

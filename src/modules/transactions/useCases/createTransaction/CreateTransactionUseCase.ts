@@ -1,14 +1,19 @@
 import { inject, injectable } from "tsyringe";
 
-import { AppError } from "../../../../errors/AppError";
+//import { AppError } from "../../../../errors/AppError";
 import { ICreateTransactionDTO } from "../../dtos/ICreateTransactionDTO";
 import { ITransactionRepository } from "../../repositories/ITransactionsRepository";
 
+//import { ICreateCategoryDTO } from '../../dtos/ICreateCategoryDTO';
+import { ICategoriesRepository } from '../../repositories/ICategoriesRepository'
 @injectable()
 class CreateTransactionUseCase {
   constructor(
     @inject("TransactionRepository")
     private transactionRepository: ITransactionRepository,
+
+    @inject("CategoriesRepository")
+    private categoriesRepository: ICategoriesRepository,
   ) {}
 
   async execute({
@@ -17,12 +22,31 @@ class CreateTransactionUseCase {
     value,
     category
   }: ICreateTransactionDTO): Promise<void> {
-   await this.transactionRepository.create({
+    let transactionCategory = await this.categoriesRepository.findByName(category);
+
+    if(transactionCategory) {
+      const categoryName = transactionCategory.name;
+
+      await this.transactionRepository.create({
         title,
         type,
         value,
-        category,
-    })
+        category: categoryName
+      }) 
+    } else {
+      const categoryCreated = await this.categoriesRepository.create({
+        name: category,
+      });
+
+      let categoryName = categoryCreated.name;
+
+      await this.transactionRepository.create({
+        title,
+        type,
+        value,
+        category: categoryName,
+      });
+    }
   }
 }
 
