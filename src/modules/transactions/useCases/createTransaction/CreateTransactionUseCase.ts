@@ -35,7 +35,7 @@ class CreateTransactionUseCase {
       }) 
     } else {
       const categoryCreated = await this.categoriesRepository.create({
-        name: category,
+        name: category
       });
 
       let categoryName = categoryCreated.name;
